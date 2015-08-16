@@ -53,25 +53,21 @@ app.post('/team/:team',function(req,res){
 			// only add a row when location exists
 			if (media.location != null) {
 				rowValue = "(ST_SetSRID(ST_Point(" + media.location.longitude + "," + media.location.latitude +"),4326),'" +
-						   media.created_time + "','" +
-						   media.id + "','" +
-						   media.link + "','" +
-						   media.images.thumbnail.url + "','" +
-						   teamName +
-						   "')";
+							media.created_time + "','" +
+							media.id + "','" +
+							media.link + "','" +
+							media.images.thumbnail.url + "','" +
+							teamName +
+							"')";
 			} else {
 				return false
 			}
 
 			rows.push(rowValue);
 		});
-
 		// Stringify values to be updated or inserted to CartoDB
 		cartoClient.acceptString(_(rows).toString());
 	};
-
-	ig.tag_media_recent(teamName, hdl);
-
 });
 
 app.listen(process.env.PORT || 8080);
