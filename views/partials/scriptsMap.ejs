@@ -1,0 +1,28 @@
+<script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<script>
+	var map = new L.Map('map', {
+		center: [40.7801201,-73.9543557],
+		zoom: 2,
+		// minZoom:11,
+		// maxZoom:14
+	});
+
+	L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+	}).addTo(map);
+
+	var layers = {
+		user_name:'jue',
+		type: 'cartodb',
+		sublayers: [{
+    		sql: "SELECT * FROM scavenger_carto",
+    		cartocss: '#scavenger_carto {marker-width:10; marker-fill: #000;}'
+  		}]
+	};
+
+	cartodb.createLayer(map,layers)
+		.addTo(map)
+		.on('done',function(layer){
+			//
+		})
+</script>
