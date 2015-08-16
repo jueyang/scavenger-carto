@@ -9,7 +9,9 @@
   "author": "Jue Yang",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.13.3",
     "cartodb": "^0.2.1",
+    "ejs": "^2.3.3",
     "express": "^4.13.3",
     "fs": "0.0.2",
     "instagram-node": "^0.5.7",
