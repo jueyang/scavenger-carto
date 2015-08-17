@@ -28,9 +28,11 @@ app.get('/',function(req,res){
 	res.render('pages/index');
 });
 
-// Search by team
-app.get('/progress',function(req,res){
-	res.render('pages/progress');
+// team map
+app.get('/:team',function(req,res){
+	res.render('pages/team', {
+		team: req.params.team
+	});
 });
 
 // when team name is posted
