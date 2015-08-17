@@ -26,15 +26,15 @@ ul li {
 }
 .button,
 .button:visited {
-	background-color:#FDA330;
+	background-color:#FDA330!important;
 }
 .button:hover{
-	background-color:#FFD033;
+	background-color:#FFD033!important;
 }
 
 /* map */
 #map {
-	height:30rem;
+	height:25rem;
 	margin-bottom:1rem;
 }
 .cartodb-popup {
