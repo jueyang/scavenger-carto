@@ -45,7 +45,7 @@ Scavenger.prototype.createTeamMap = function(team){
     type: 'cartodb',
     sublayers: [{
         sql: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
-        cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #69B25B;}',
+        cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}',
         interactivity: "ig_thumbnail, team_name"
       }]
   };
