@@ -5,11 +5,14 @@
 	</head>
 	<body>
 		<div class="row">
-			<h1 class="small-6 small-centered columns">Scavenger Hunt 2015</h1>
-			<p class="small-6 small-centered columns">The game is on! To check the latest status of your team, enter your team name (without the "#team" part) and click to check.</p>
+			<div class="small-3 small-centered columns">
+				<img class="splash" src="assets/splash.png"/>
+			</div>
+			<h3 class="medium-6 medium-centered columns"><span><strong>CUNY-J</strong> Scavenger Hunt 2015</span></h3>
+			<p class="medium-6 medium-centered columns">The game is on! To check the latest status of your team, enter your team name (without the "#team" part) and click to check.</p>
 		</div>
 		<form class="row">
-			<div class="small-6 small-centered columns">
+			<div class="medium-6 medium-centered columns">
 				<div class="row collapse prefix-radius">
 					<div class="small-3 columns">
 				  		<span class="prefix">#team</span>
@@ -19,12 +22,13 @@
 					</div>
 				</div>
 				<div class="row collapse prefix-radius">
-					<div class="small-12 columns">
+					<div class="medium-12 columns">
 						<a id='toMap' href="#" class="button expand">How is my team doing?</a>
 					</div>
 				</div>
 			</div>
 		</form>
+		<% include ../partials/footer %>
 	</body>
 	<% include ../partials/scriptsAll %>
 </html>
