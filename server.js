@@ -40,12 +40,9 @@ app.post('/team/:team',function(req,res){
 
 	var teamName = req.body.team;
 
-	// TODO pagination
-	ig.tag_media_recent(teamName, hdl);
-
 	// format ig objects to fit the sql table
 	var hdl = function(err, medias, pagination, remaining, limit) {
-
+		
 		var rows = [];
 
 		medias.forEach(function(media){
