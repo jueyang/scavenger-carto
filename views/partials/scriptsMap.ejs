@@ -1,28 +1,15 @@
 <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+<script type="infowindow/html" id="infowindow_template">
+  <div class="cartodb-popup">
+    <a href="#close" class="cartodb-popup-close-button close">x</a>
+     <div class="panel">
+       <div>
+         <img style="width:100%;" src="{{content.data.ig_thumbnail}}"/>
+         <h4>{{content.data.team_name}}</h4>
+       </div>
+     </div>
+  </div>
+</script>
 <script>
-	var map = new L.Map('map', {
-		center: [40.7801201,-73.9543557],
-		zoom: 2,
-		// minZoom:11,
-		// maxZoom:14
-	});
-
-	L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-	}).addTo(map);
-
-	var layers = {
-		user_name:'jue',
-		type: 'cartodb',
-		sublayers: [{
-    		sql: "SELECT * FROM scavenger_carto",
-    		cartocss: '#scavenger_carto {marker-width:10; marker-fill: #000;}'
-  		}]
-	};
-
-	cartodb.createLayer(map,layers)
-		.addTo(map)
-		.on('done',function(layer){
-			//
-		})
+  window.app.createTeamMap('<%=team %>');
 </script>
