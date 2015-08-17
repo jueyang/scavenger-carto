@@ -18,6 +18,9 @@ strong {
 	text-transform: uppercase;
 	font-weight:600;
 }
+ul li {
+	list-style: lower-greek inside;
+}
 .splash {
 	margin:1rem 0;
 }
@@ -31,8 +34,8 @@ strong {
 
 /* map */
 #map {
-	width:100%;
-	height:20rem;
+	height:30rem;
+	margin-bottom:1rem;
 }
 .cartodb-popup {
     background:none!important;
