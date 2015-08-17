@@ -2,7 +2,6 @@
 <html lang='en'>
 	<head>
 		<% include ../partials/head %>
-		<link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
 	</head>
 	<style>
 		#map {
@@ -12,8 +11,7 @@
 	</style>
 	<body>
 		<div class="row">
-			<h1 class="small-6 small-centered columns">Scavenger Hunt 2015</h1>
-			<p class="small-6 small-centered columns">The game is on!</p>
+			<p class="small-6 small-centered columns"><strong><%= team %></strong>, here's where you've been!</p>
 		</div>
 		<div id='map'></div>
 	</body>
