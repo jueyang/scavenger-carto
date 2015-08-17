@@ -4,10 +4,18 @@ Scavenger = function(){
 	this.toTable = $('#toTable');
 
 	this.toMap.on('click',this.getTeamGrams.bind(this));
+  this.team.on('keydown',this.onEnterDown.bind(this));
 };
 
-Scavenger.prototype.onKeyEnter = function(event){
-	// TODO bind getTeamGrams to enter
+Scavenger.prototype.onEnterDown = function(event){
+    if (event.which != 13) {
+        console.log('not enter')
+        return;
+    }
+
+    this.getTeamGrams();
+
+    event.preventDefault();
 };
 
 Scavenger.prototype.getTeamGrams = function(event){
