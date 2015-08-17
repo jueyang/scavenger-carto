@@ -9,8 +9,7 @@ Scavenger = function(){
 
 Scavenger.prototype.onEnterDown = function(event){
 		if (event.which != 13) {
-				console.log('not enter')
-				return;
+			return;
 		}
 
 		this.getTeamGrams();
