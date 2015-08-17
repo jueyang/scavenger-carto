@@ -1,8 +1,9 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var request = require('request');
 var ig = require('instagram-node').instagram();
 var _ = require('lodash');
-var CartoDB = require('cartodb');
+var CartoDBTemp= require('./models/databaseTemp.js');
 var token = require('./token.js');
 
 // Instagram setup
@@ -10,6 +11,9 @@ ig.use({
 	client_id: token.ig_client_id,
 	client_secret: token.ig_client_secret
 });
+
+// CartoDBTemp setup
+var cartoClient = new CartoDBTemp(token);
 
 // app setup
 var app = express();
@@ -66,48 +70,21 @@ app.post('/team/:team',function(req,res){
 			rows.push(rowValue);
 		});
 
-		// using single client for the app creates multiple connections
-		// see https://github.com/Vizzuality/cartodb-nodejs/issues/31
-		// temp solution: create new instance of cartoClient within the route
+		var valueString = _(rows).toString();
 
-		// CartoDB setup
-		var cartoClient = new CartoDB({
-			user:token.cartodb_user,
-			api_key:token.cartodb_api_key
-		});
+		// use the request module to post to CartoDB's SQL API
 
-		// add function to CartoClient
-		cartoClient.acceptString = function(valueString){
-			cartoClient.on('connect',function(){
-				console.log('cartoDB connected once');
-
-				// scavenger_carto (the_geom,ig_created_time, ig_id, ig_link, ig_thumbnail, team_name)
-
-				var queryBlock ="WITH n(the_geom, ig_created_time, ig_id, ig_link, ig_thumbnail, team_name) AS (" +
-								 	"VALUES " + valueString +
-								")," +
-								"upsert AS (" +
-									"UPDATE {table} o " +
-									"SET the_geom = n.the_geom " + // only update geo location now, all others are constant
-									"FROM n WHERE o.ig_id = n.ig_id " +
-									"RETURNING o.ig_id" +
-								")" +
-								"INSERT INTO {table} (the_geom, ig_created_time, ig_id, ig_link, ig_thumbnail, team_name) " +
-								"SELECT * FROM n " +
-								"WHERE n.ig_id NOT IN (" +
-									"SELECT ig_id FROM upsert" +
-								")";
-
-				cartoClient.query(queryBlock,{table:token.cartodb_table},function(err,data){
-					console.log(data);
-				})
-
-			});
+		if (valueString.length === 0) {
+			console.log('no values existed');
+		} else {
+			var requestString = cartoClient.createRequest(valueString);
+			request(requestString, function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					console.log(response.body); // should return the same as the CartoDB's node client would
+				}
+			})
 		}
 
-		// Stringify values to be updated or inserted to CartoDB
-		cartoClient.acceptString(_(rows).toString());
-		cartoClient.connect();
 	};
 
 	// TODO pagination
