@@ -36,18 +36,10 @@ Scavenger.prototype.getTeamGrams = function(event){
 };
 
 Scavenger.prototype.createMap = function(team){
-<<<<<<< HEAD
-	var map = new L.Map('map', {
-		center: [40.7801201,-73.9543557],
-		zoom: 2
-		// minZoom:11,
-		// maxZoom:14
-=======
 	// map setup
 	var map = new L.Map('map',{
 		center: [40.7801201,-73.9543557],
 		zoom: 2
->>>>>>> 966a8a0... add center/zoom as they are required when initializing map
 	});
 
 	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
