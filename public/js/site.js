@@ -35,12 +35,12 @@ Scavenger.prototype.getTeamGrams = function(event){
 	event.preventDefault();
 };
 
-Scavenger.prototype.updateTeamGrams = function(event){
-};
-
 Scavenger.prototype.createMap = function(team){
 	// map setup
-	var map = new L.Map('map');
+	var map = new L.Map('map',{
+		center: [40.7801201,-73.9543557],
+		zoom: 2
+	});
 
 	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
