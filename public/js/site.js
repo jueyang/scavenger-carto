@@ -35,36 +35,34 @@ Scavenger.prototype.getTeamGrams = function(event){
 	event.preventDefault();
 };
 
+Scavenger.prototype.updateTeamGrams = function(event){
+};
+
 Scavenger.prototype.createMap = function(team){
-<<<<<<< HEAD
-	var map = new L.Map('map', {
-		center: [40.7801201,-73.9543557],
-		zoom: 2
-		// minZoom:11,
-		// maxZoom:14
-=======
 	// map setup
 	var map = new L.Map('map',{
 		center: [40.7801201,-73.9543557],
 		zoom: 2
->>>>>>> 966a8a0... add center/zoom as they are required when initializing map
 	});
 
 	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-	}).addTo(map);
+		}).addTo(map);
 
-	var layers = {
-		user_name:'jue',
-		type: 'cartodb',
-		sublayers: [{
-				sql: "SELECT * FROM scavenger_carto",
-				cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}',
-				interactivity: "ig_thumbnail, team_name"
-			}
-		]
+	// position the map to the extent of the bounds
+	var sql = new cartodb.SQL({user:'jue'});
+	var layerOptions = {
+		query: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
+		cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}'
 	};
-	// https://github.com/CartoDB/cartodb.js/blob/develop/examples/custom_infowindow.html
+
+	sql.getBounds(layerOptions.query)
+		.done(function(bounds){
+			map.fitBounds(bounds);
+		});
+
+	var layers = "https://jue.cartodb.com/api/v2/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/viz.json";
+
 	cartodb.createLayer(map,layers)
 		.addTo(map)
 		.on('done',function(layer){
@@ -72,12 +70,16 @@ Scavenger.prototype.createMap = function(team){
 			var sublayer = layer.getSubLayer(0);
 
 			if (team != undefined){
-				layer.getSubLayer(0).setSQL("SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'");
+				sublayer.setSQL(layerOptions.query)
+					.setCartoCSS(layerOptions.cartocss);
 			}
 
-			cdb.vis.Vis.addInfowindow(map, sublayer, ['ig_thumbnail', 'team_name'], {
-				infowindowTemplate: $('#infowindow_template').html()
+			sublayer.infowindow.set({
+				template: $('#infowindow_template').html(),
+				width:200
 			});
-			sublayer.setInteraction(true);
+
+			// TODO template legend for each team
+			sublayer.legend.set({visible:false});
 	});
 };
