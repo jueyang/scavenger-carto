@@ -51,22 +51,18 @@ Scavenger.prototype.createMap = function(team){
 
 	// position the map to the extent of the bounds
 	var sql = new cartodb.SQL({user:'jue'});
-	sql.getBounds("SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'")
+	var layerOptions = {
+		query: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
+		cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}'
+	};
+
+	sql.getBounds(layerOptions.query)
 		.done(function(bounds){
 			map.fitBounds(bounds);
 		});
 
-	var layers = {
-		user_name:'jue',
-		type: 'cartodb',
-		sublayers: [{
-				sql: "SELECT * FROM scavenger_carto",
-				cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}',
-				interactivity: "ig_thumbnail, team_name"
-			}
-		]
-	};
-	// https://github.com/CartoDB/cartodb.js/blob/develop/examples/custom_infowindow.html
+	var layers = "https://jue.cartodb.com/api/v2/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/viz.json";
+
 	cartodb.createLayer(map,layers)
 		.addTo(map)
 		.on('done',function(layer){
@@ -74,12 +70,16 @@ Scavenger.prototype.createMap = function(team){
 			var sublayer = layer.getSubLayer(0);
 
 			if (team != undefined){
-				layer.getSubLayer(0).setSQL("SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'");
+				sublayer.setSQL(layerOptions.query)
+					.setCartoCSS(layerOptions.cartocss);
 			}
 
-			cdb.vis.Vis.addInfowindow(map, sublayer, ['ig_thumbnail', 'team_name'], {
-				infowindowTemplate: $('#infowindow_template').html()
+			sublayer.infowindow.set({
+				template: $('#infowindow_template').html(),
+				width:200
 			});
-			sublayer.setInteraction(true);
+
+			// TODO template legend for each team
+			sublayer.legend.set({visible:false});
 	});
 };
