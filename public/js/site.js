@@ -22,7 +22,7 @@ Scavenger.prototype.getTeamGrams = function(event){
 	var teamInput = this.team.val().trim();
 
 	$.ajax({
-		url: '/team/' + teamInput,
+		url: '/grams/' + teamInput,
 		type: 'POST',
 		data: {team: 'team' + teamInput},
 		dataType: 'json'
