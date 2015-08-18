@@ -63,6 +63,7 @@ Scavenger.prototype.createMap = function(team){
 			}
 		]
 	};
+	// create layer/sublayer
 	// https://github.com/CartoDB/cartodb.js/blob/develop/examples/custom_infowindow.html
 	cartodb.createLayer(map,layers)
 		.addTo(map)
@@ -71,12 +72,16 @@ Scavenger.prototype.createMap = function(team){
 			var sublayer = layer.getSubLayer(0);
 
 			if (team != undefined){
-				layer.getSubLayer(0).setSQL("SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'");
+				sublayer.setSQL("SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'");
 			}
 
 			cdb.vis.Vis.addInfowindow(map, sublayer, ['ig_thumbnail', 'team_name'], {
 				infowindowTemplate: $('#infowindow_template').html()
 			});
+
 			sublayer.setInteraction(true);
-	});
+
+			// _.debounce(layer.invalidate(),1000);
+			sublayer.show();
+		});
 };
