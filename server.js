@@ -40,7 +40,7 @@ app.get('/:team',function(req,res){
 });
 
 // when team name is posted
-app.post('/team/:team',function(req,res){
+app.post('/grams/:team',function(req,res){
 
 	var teamName = req.body.team;
 
