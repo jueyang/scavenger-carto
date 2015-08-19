@@ -48,7 +48,6 @@ Scavenger.prototype.createTeamPage = function(team){
 
 	this.sql.execute(this.layerOptions.query)
 		.done(function(data){
-			console.log(data.rows);
 			if (data.rows.length != 0){
 				view.initMap();
 				view.setWelcomeText(data.rows.length);
@@ -63,7 +62,7 @@ Scavenger.prototype.createTeamPage = function(team){
 };
 Scavenger.prototype.setWelcomeText = function(num){
 	if (num != undefined){
-		// $('#dataRowNumber').text(num);
+		$('#dataRowNumber').text(num);
 		$('#withDataRows').show();
 	} else {
 		$('#noDataRows').show();
