@@ -83,11 +83,7 @@ ul li {
 /* map */
 #map {
 	height:20rem;
-<<<<<<< HEAD
-    border:0.9375rem solid #f2f2f2;
-=======
     border:0.9375rem solid #fff;
->>>>>>> master
 	margin-bottom:1rem;
 }
 .cartodb-popup {
