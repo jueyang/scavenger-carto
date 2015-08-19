@@ -5,17 +5,19 @@
 	</head>
 	<body>
 		<div class="row">
-			<h3 class="medium-12 columns"><strong><%= team %></strong> - you have been to these places!</h3>
+			<h3 class="medium-7 medium-centered columns"><strong><%= team %></strong></h3>
+		</div>
+		<div class="row welcome">
+			<h4 id="withDataRows"class="medium-7 medium-centered columns">You have been to these places!</h4>
+<!-- 			<h4 id="withDataRows"class="medium-7 medium-centered columns">You have been to <span id="dataRowNumber"></span> places!</h4> -->
+			<h4 id="noDataRows" class="medium-7 medium-centered columns">It doesn't look like you have been anywhere. Start posting to your instagram!</h4>
 		</div>
 		<div class="row">
 			<div id="map" class="medium-12 columns"></div>
 		</div>
 		<div class="row">
-			<div class="medium-12 columns">
-				<ul class="button-group even-2">
-					<li><a href="#" class="button"><strong>update my team progress</strong></a></li>
-					<li><a href="https://jue.cartodb.com/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/embed_map" target="_blank" class="button"><strong>view map with all teams</strong></a></li>
-				</ul>
+			<div class="medium-7 medium-centered columns">
+				<a class="button expand" href="https://jue.cartodb.com/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/embed_map" target="_blank"><strong>view map with all teams</strong></a></li>
 			</div>
 		</div>
 	</body>

@@ -37,7 +37,6 @@ app.get('/:team',function(req,res){
 
 // when team name is posted
 app.post('/grams/:team',function(req,res){
-
 	var teamName = req.body.team;
 
 	// format ig objects to fit the sql table
@@ -90,7 +89,7 @@ app.post('/grams/:team',function(req,res){
 									"SET the_geom = n.the_geom " + // only update geo location now, all others are constant
 									"FROM n WHERE o.ig_id = n.ig_id " +
 									"RETURNING o.ig_id" +
-								")" +
+								") " +
 								"INSERT INTO {table} (the_geom, ig_created_time, ig_id, ig_link, ig_thumbnail, team_name) " +
 								"SELECT * FROM n " +
 								"WHERE n.ig_id NOT IN (" +
@@ -98,18 +97,27 @@ app.post('/grams/:team',function(req,res){
 								")";
 
 				cartoClient.query(queryBlock,{table:token.cartodb_table},function(err,data){
+					if (err) console.error(err);
 					console.log(data);
-				})
+				});
 
 			});
 		}
 
 		// Stringify values to be updated or inserted to CartoDB
-		cartoClient.acceptString(_(rows).toString());
+		if (rows.length > 0) {
+			cartoClient.acceptString(_(rows).toString());
+		};
+
 		cartoClient.connect();
+
+		// instagram pagination
+		if(pagination.next) {
+			console.log('there is a next page');
+			pagination.next(hdl);
+		};
 	};
 
-	// TODO pagination
 	ig.tag_media_recent(teamName, hdl);
 
 	// passing back the team name
