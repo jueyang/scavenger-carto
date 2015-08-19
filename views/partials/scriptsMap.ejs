@@ -3,12 +3,12 @@
     <a href="#close" class="cartodb-popup-close-button close">x</a>
      <div class="panel">
        <div>
-         <img style="width:100%;" src="{{content.data.ig_thumbnail}}"/>
+         <a href="{{content.data.ig_link}}" target="_blank"><img style="width:100%;" src="{{content.data.ig_thumbnail}}"/></a>
          <h4>{{content.data.team_name}}</h4>
        </div>
      </div>
   </div>
 </script>
 <script>
-  window.app.createMap('<%=team %>');
+  window.app.createTeamPage('<%=team %>');
 </script>

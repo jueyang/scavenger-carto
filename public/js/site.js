@@ -1,20 +1,19 @@
 Scavenger = function(){
 	this.team = $('#teamName');
 	this.toMap = $('#toMap');
-	this.toTable = $('#toTable');
 
 	this.toMap.on('click',this.getTeamGrams.bind(this));
 	this.team.on('keydown',this.onEnterDown.bind(this));
 };
 
 Scavenger.prototype.onEnterDown = function(event){
-		if (event.which != 13) {
-			return;
-		}
+	if (event.which != 13) {
+		return;
+	}
 
-		this.getTeamGrams();
+	this.toMap.trigger('click');
 
-		event.preventDefault();
+	event.preventDefault();
 };
 
 Scavenger.prototype.getTeamGrams = function(event){
@@ -35,31 +34,55 @@ Scavenger.prototype.getTeamGrams = function(event){
 	event.preventDefault();
 };
 
-Scavenger.prototype.updateTeamGrams = function(event){
-};
 
-Scavenger.prototype.createMap = function(team){
+Scavenger.prototype.createTeamPage = function(team){
+	//TODO better way to bind scope
+	var view = this;
+
+	this.sql = new cartodb.SQL({user:'jue'});
+
+	this.layerOptions = {
+		query: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
+		cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}'
+	};
+
+	this.sql.execute(this.layerOptions.query)
+		.done(function(data){
+			console.log(data.rows);
+			if (data.rows.length != 0){
+				view.initMap();
+				view.setWelcomeText(data.rows.length);
+			} else {
+				view.setWelcomeText();
+			}
+		})
+		.error(function(errors){
+			console.log(errors);
+		});
+
+};
+Scavenger.prototype.setWelcomeText = function(num){
+	if (num != undefined){
+		// $('#dataRowNumber').text(num);
+		$('#withDataRows').show();
+	} else {
+		$('#noDataRows').show();
+		$('#map').hide();
+	}
+
+};
+Scavenger.prototype.initMap = function(){
+	// TODO better way to bind scope
+	var view = this;
 	// map setup
 	var map = new L.Map('map',{
 		center: [40.7801201,-73.9543557],
 		zoom: 2
 	});
 
-	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
+	L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
 		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 		}).addTo(map);
-
-	// position the map to the extent of the bounds
-	var sql = new cartodb.SQL({user:'jue'});
-	var layerOptions = {
-		query: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
-		cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}'
-	};
-
-	sql.getBounds(layerOptions.query)
-		.done(function(bounds){
-			map.fitBounds(bounds);
-		});
 
 	var layers = "https://jue.cartodb.com/api/v2/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/viz.json";
 
@@ -69,10 +92,8 @@ Scavenger.prototype.createMap = function(team){
 
 			var sublayer = layer.getSubLayer(0);
 
-			if (team != undefined){
-				sublayer.setSQL(layerOptions.query)
-					.setCartoCSS(layerOptions.cartocss);
-			}
+			sublayer.setSQL(view.layerOptions.query)
+					.setCartoCSS(view.layerOptions.cartocss);
 
 			sublayer.infowindow.set({
 				template: $('#infowindow_template').html(),
@@ -82,4 +103,10 @@ Scavenger.prototype.createMap = function(team){
 			// TODO template legend for each team
 			sublayer.legend.set({visible:false});
 	});
+
+	// position the map to the extent of the bounds
+	this.sql.getBounds(this.layerOptions.query)
+		.done(function(bounds){
+			map.fitBounds(bounds);
+		});
 };
