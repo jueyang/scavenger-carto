@@ -66,12 +66,14 @@ ul li {
 }
 .button,
 .button:visited {
-	background-color:#FDA330!important;
+	background-color:#FDA330;
 }
 .button:hover{
-	background-color:#FFD033!important;
+	background-color:#FFD033;
 }
-
+.button.secondary {
+    background-color:#ccc;
+}
 .welcome {
     text-align:center;
     margin-bottom:1rem;
@@ -83,11 +85,7 @@ ul li {
 /* map */
 #map {
 	height:20rem;
-<<<<<<< HEAD
-    border:0.9375rem solid #f2f2f2;
-=======
     border:0.9375rem solid #fff;
->>>>>>> master
 	margin-bottom:1rem;
 }
 .cartodb-popup {
