@@ -4,7 +4,7 @@
 		<% include ../partials/head %>
 	</head>
 	<body>
-		<div class="row">
+		<div class="row" id="name" data-id="<%=original%>">
 			<h3 class="medium-7 medium-centered columns"><strong><%= team %></strong></h3>
 		</div>
 		<div class="row welcome">
@@ -16,7 +16,8 @@
 		</div>
 		<div class="row">
 			<div class="medium-7 medium-centered columns">
-				<a class="button expand" href="https://jue.cartodb.com/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/embed_map" target="_blank"><strong>view map with all teams</strong></a></li>
+				<a id="update" href="#" class="button expand"><strong>Update my team progress</strong></a>
+				<a class="button secondary expand" href="https://jue.cartodb.com/viz/b887b6ec-4487-11e5-ad67-0e853d047bba/embed_map" target="_blank"><strong>view map with all teams</strong></a></li>
 			</div>
 		</div>
 	</body>

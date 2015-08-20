@@ -1,9 +1,11 @@
 Scavenger = function(){
 	this.team = $('#teamName');
 	this.toMap = $('#toMap');
+	this.update = $('#update');
 
-	this.toMap.on('click',this.getTeamGrams.bind(this));
 	this.team.on('keydown',this.onEnterDown.bind(this));
+	this.toMap.on('click',this.gramsFromForm.bind(this));
+	this.update.on('click',this.gramsFromUpdate.bind(this));
 };
 
 Scavenger.prototype.onEnterDown = function(event){
@@ -16,24 +18,35 @@ Scavenger.prototype.onEnterDown = function(event){
 	event.preventDefault();
 };
 
-Scavenger.prototype.getTeamGrams = function(event){
-	// get user input from form
-	var teamInput = this.team.val().trim();
-
+Scavenger.prototype.getTeamGrams = function(input){
 	$.ajax({
-		url: '/grams/' + teamInput,
+		url: '/grams/' + input,
 		type: 'POST',
-		data: {team: 'team' + teamInput},
+		data: {team: 'team' + input},
 		dataType: 'json'
-	}).done(function(){
+	}).done(function(data){
 		// redirect after ajax is finished
 		// this triggers a GET on the server
-		window.location.href = '/team' + teamInput;
+		window.location.href = '/team' + input;
 	});
+}
+
+Scavenger.prototype.gramsFromForm = function(event){
+	// get user input from form
+	var input = this.team.val().trim();
+
+	this.getTeamGrams(input);
 
 	event.preventDefault();
 };
 
+Scavenger.prototype.gramsFromUpdate= function(event){
+	var input = $('#name').data('id');
+	
+	this.getTeamGrams(input);
+
+	event.preventDefault();
+}
 
 Scavenger.prototype.createTeamPage = function(team){
 	//TODO better way to bind scope

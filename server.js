@@ -30,8 +30,11 @@ app.get('/',function(req,res){
 
 // team map
 app.get('/:team',function(req,res){
+	var originalName = req.params.team.substring(4);
+
 	res.render('pages/team', {
-		team: req.params.team
+		team: req.params.team,
+		original: originalName
 	});
 });
 
