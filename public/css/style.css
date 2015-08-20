@@ -46,7 +46,6 @@ h3 {
 	text-transform: uppercase;
     text-align: center;
 	letter-spacing:0.15rem;
-	margin:1rem 0;
 }
 h3 span {
 	color:#FDA330;
@@ -66,6 +65,7 @@ ul li {
 }
 .button,
 .button:focus {
+    font-size:0.8rem;
 	background-color:#FDA330;
 }
 .button:hover{
@@ -81,7 +81,7 @@ ul li {
 }
 .welcome {
     text-align:center;
-    margin-bottom:1rem;
+    margin:0.75rem auto;
 }
 
 .welcome h4 {
@@ -90,8 +90,6 @@ ul li {
 /* map */
 #map {
 	height:20rem;
-    border:0.9375rem solid #fff;
-	margin-bottom:1rem;
 }
 .cartodb-popup {
     background:none!important;

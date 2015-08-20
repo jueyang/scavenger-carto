@@ -55,7 +55,7 @@ Scavenger.prototype.createTeamPage = function(team){
 	this.sql = new cartodb.SQL({user:'jue'});
 
 	this.layerOptions = {
-		query: "SELECT * FROM scavenger_carto WHERE team_name ='" + team + "'",
+		query: "SELECT * FROM scavenger_carto WHERE team_name ILIKE '%" + team + "%'",
 		cartocss: '#scavenger_carto {marker-line-width:0; marker-fill: #FDA330;}'
 	};
 
