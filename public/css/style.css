@@ -65,14 +65,19 @@ ul li {
 	margin:1rem 0;
 }
 .button,
-.button:visited {
+.button:focus {
 	background-color:#FDA330;
 }
 .button:hover{
 	background-color:#FFD033;
 }
-.button.secondary {
-    background-color:#ccc;
+.button.secondary,
+.button.secondary:focus {
+    color:#fff;
+    background-color:#cfcfcf;
+}
+.button.secondary:hover {
+    color:#fff;
 }
 .welcome {
     text-align:center;
