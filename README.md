@@ -15,7 +15,7 @@ It checks hashtagged instagram posts and store relevant* ones to a CartoDB datab
 
 *= A relavant post has a correct hashtag (the desired team name) and a location.
 
-## Develop Documentation
+## Develop documentation
 
 `npm install`
 
